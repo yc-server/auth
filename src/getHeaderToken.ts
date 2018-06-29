@@ -1,4 +1,4 @@
-import { IContext } from "@ycs/interfaces";
+import { IContext } from '@ycs/interfaces';
 
 export function getHeaderToken(ctx: IContext): string | null {
   if (
