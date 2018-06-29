@@ -19,7 +19,7 @@ describe('Test Auth', () => {
     enableSimpleAuth: true,
     defaultRoles: ['user'],
     expiresIn: '10y',
-  }
+  };
 
   const auth = new Auth(config);
 
@@ -28,19 +28,21 @@ describe('Test Auth', () => {
     providers: [],
     roles: [],
   };
-  const JWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjEsInByb3ZpZGVycyI6W10sInJvbGVzIjpbXSwiaWF0IjoxNTMwMjc5OTE2LCJleHAiOjMxMDgxNTk5MTZ9.9lbXuO4kDeDR2YAFItXoj2gOo-OQXmXm6MSvyie7Eeo';
-  const JWT_EXPIRED = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjEsInByb3ZpZGVycyI6W10sInJvbGVzIjpbXSwiaWF0IjoxNTMwMjc5ODYxLCJleHAiOjE1MzAyNzk4NjJ9.5K4x86JqbQ5A4s6vCdDc7U66yry5GpoFrni3qtHWm9E';
+  const JWT =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjEsInByb3ZpZGVycyI6W10sInJvbGVzIjpbXSwiaWF0IjoxNTMwMjc5OTE2LCJleHAiOjMxMDgxNTk5MTZ9.9lbXuO4kDeDR2YAFItXoj2gOo-OQXmXm6MSvyie7Eeo';
+  const JWT_EXPIRED =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOjEsInByb3ZpZGVycyI6W10sInJvbGVzIjpbXSwiaWF0IjoxNTMwMjc5ODYxLCJleHAiOjE1MzAyNzk4NjJ9.5K4x86JqbQ5A4s6vCdDc7U66yry5GpoFrni3qtHWm9E';
 
   test('Should sign', () => {
-    const jwt1 = auth.signToken(DOC, { });
-    const jwt2 = sign(DOC, auth.config.secret, { });
+    const jwt1 = auth.signToken(DOC, {});
+    const jwt2 = sign(DOC, auth.config.secret, {});
     expect(jwt1).toBe(jwt2);
   });
 
   test('Should verify success', async () => {
     try {
       expect(await auth.verifyToken(JWT)).toBeTruthy();
-    } catch(e) {
+    } catch (e) {
       fail(e);
     }
   });
@@ -48,12 +50,8 @@ describe('Test Auth', () => {
   test('Should verify fail', async () => {
     try {
       expect(await auth.verifyToken('JWT')).toBeFalsy();
-    } catch(e) {
+    } catch (e) {
       fail(e);
     }
   });
-
-
-
-})
-
+});

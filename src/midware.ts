@@ -1,5 +1,5 @@
-import { Boom, handleError } from "@ycs/error";
-import { IContext } from "@ycs/interfaces";
+import { Boom, handleError } from '@ycs/error';
+import { IContext } from '@ycs/interfaces';
 import * as compose from 'koa-compose';
 
 export function owns(model) {
@@ -17,4 +17,4 @@ export function owns(model) {
       }
     },
   ]);
-};
+}

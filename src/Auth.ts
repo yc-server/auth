@@ -1,26 +1,22 @@
-import { Schema, model, PaginateModel, Document } from "@ycs/db";
-import { Boom, handleError } from "@ycs/error";
+import { Schema, model, PaginateModel, Document } from '@ycs/db';
+import { Boom } from '@ycs/error';
 import { SignOptions, sign, verify } from 'jsonwebtoken';
-import * as compose from 'koa-compose';
 import * as uniqueValidator from 'mongoose-unique-validator';
-import { IConfig } from "./IConfig";
-import { randomBytes, pbkdf2 } from "crypto";
-import { IContext } from "@ycs/interfaces";
+import { IConfig } from './IConfig';
+import { randomBytes, pbkdf2 } from 'crypto';
 
 function preValidate(config: IConfig) {
-  return async function (next) {
+  return async function(next) {
     // Handle new/update passwords
     if (!this.isModified('password')) return next();
-  
+
     // Password must not be empty if there is no any providers
     if (!this.password || !this.password.length) {
       if (!this.providers || !this.providers.length)
-        return next(
-          Boom.badData(config.messages.errors.invalid_password)
-        );
+        return next(Boom.badData(config.messages.errors.invalid_password));
       return next();
     }
-  
+
     // Make salt
     try {
       this.salt = await this.makeSalt();
@@ -30,15 +26,13 @@ function preValidate(config: IConfig) {
     } catch (e) {
       next(e);
     }
-  }
-} 
+  };
+}
 
 export class Auth {
   schema: Schema;
   model: PaginateModel<Document>;
-  constructor(
-    public config: IConfig,
-  ) { 
+  constructor(public config: IConfig) {
     this.schema = new Schema(
       {
         password: {
@@ -119,7 +113,7 @@ export class Auth {
         const pwdGen = await this.encryptPassword(password);
         return this.password === pwdGen;
       },
-  
+
       /**
        * Make salt
        *
@@ -138,7 +132,7 @@ export class Auth {
           });
         });
       },
-  
+
       /**
        * Encrypt password
        *
@@ -183,7 +177,7 @@ export class Auth {
       this.config.secret,
       options
     );
-  };
+  }
 
   verifyToken(token: string): Promise<any> {
     if (!token) return Promise.resolve();
@@ -193,5 +187,5 @@ export class Auth {
         resolve(decoded);
       });
     });
-  };
+  }
 }

@@ -1,4 +1,4 @@
-import { Auth, isAuthenticated, IConfig } from '../src'
+import { Auth, isAuthenticated, IConfig } from '../src';
 
 console.error = jest.fn();
 console.log = jest.fn();
@@ -20,7 +20,7 @@ const config: IConfig = {
   enableSimpleAuth: true,
   defaultRoles: ['user'],
   expiresIn: '10y',
-}
+};
 
 test('should isAuthenticated', async () => {
   const auth: any = {
